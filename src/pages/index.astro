@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pillars = [
+  ['Move', 'Vitaspeed runs, walks and other welcoming ways to move together at your pace.', '↗'],
+  ['Nourish', 'Whole, flavourful food and the local people who make it easier to find.', '◒'],
+  ['Rest', 'Recovery, water and a sustainable rhythm for a good day.', '☾'],
+  ['Connect', 'Habits that last because neighbours and partners make room for them.', '✦']
+];
+---
+<BaseLayout>
+  <header class="site-header container">
+    <a class="wordmark" href="#top" aria-label="Vitalicious Living home">VITALICIOUS<span class="support-mark">V</span></a>
+    <nav aria-label="Primary navigation">
+      <a href="#move">Vitaspeed</a>
+      <a href="#nourish">Food</a>
+      <a href="#partners">For partners</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero container" aria-labelledby="hero-heading">
+      <div class="hero-copy">
+        <p class="eyebrow">Beginning in Markham</p>
+        <h1 id="hero-heading">Healthy living<br />needs something<br /><span>to lean on.</span></h1>
+        <p class="intro">Vitalicious Living brings movement and good food into one local community. Find people, places and practical ways to make a good day easier to keep.</p>
+        <div class="actions">
+          <a class="button primary" href="#move">Explore Vitaspeed <span aria-hidden="true">→</span></a>
+          <a class="button text-link" href="#nourish">How food works <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="plant plant-left">✦</div>
+        <div class="plant plant-right">✿</div>
+        <div class="v-shape"></div>
+        <div class="hero-bowl">●</div>
+      </div>
+    </section>
+
+    <section class="two-ways container" aria-labelledby="two-ways-heading">
+      <div class="section-heading">
+        <p class="eyebrow">The platform</p>
+        <h2 id="two-ways-heading">Two ways to feel good.</h2>
+        <p>Move with people who cheer you on, then find food and local businesses that share the same idea of a good day.</p>
+      </div>
+      <div class="offer-grid">
+        <article id="move" class="offer-card run-card">
+          <span class="card-symbol" aria-hidden="true">↗</span>
+          <p class="eyebrow">Move</p>
+          <h3>Vitaspeed</h3>
+          <p>Community movement for different starting points, from a first walk or 5K to a longer-running goal.</p>
+          <a href="#join">Help shape the first sessions <span aria-hidden="true">→</span></a>
+        </article>
+        <article id="nourish" class="offer-card food-card">
+          <span class="card-symbol" aria-hidden="true">◒</span>
+          <p class="eyebrow">Nourish</p>
+          <h3>Food with a clear story</h3>
+          <p>We are building a local directory of food, people and places. Published items will show their source, review status and availability.</p>
+          <a href="#food-standard">Our food standard <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="support-section" id="about" aria-labelledby="support-heading">
+      <div class="container">
+        <div class="section-heading narrow">
+          <p class="eyebrow">What holds us up</p>
+          <h2 id="support-heading">Every symbol rests on the same V.</h2>
+          <p>The V stands for the coaches, cooks, neighbours and partners who make healthy habits easier to keep.</p>
+        </div>
+        <div class="pillar-grid">
+          {pillars.map(([name, detail, symbol]) => (
+            <article class="pillar">
+              <span aria-hidden="true">{symbol}</span>
+              <h3>{name}</h3>
+              <p>{detail}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="food-standard container" id="food-standard" aria-labelledby="food-heading">
+      <div class="v-badge" aria-hidden="true">V</div>
+      <div>
+        <p class="eyebrow">Source-aware food</p>
+        <h2 id="food-heading">Good food deserves a clear story.</h2>
+        <p>Vitalicious will draw on contemporary nutrition evidence and traditional food knowledge, including Chinese food traditions. We will show what a collection or item is based on, what has been reviewed, and what remains a matter of culture, taste or personal choice.</p>
+        <p class="fine-print">Vitalicious Living shares general information only. It does not provide medical advice, diagnosis or personalised dietary treatment.</p>
+      </div>
+    </section>
+
+    <section class="partners" id="partners" aria-labelledby="partner-heading">
+      <div class="container partner-grid">
+        <div>
+          <p class="eyebrow">For local partners</p>
+          <h2 id="partner-heading">Make vitality more available where you are.</h2>
+          <p>Restaurants, cafés, grocers, studios, community spaces and organisers can help create the first Vitalicious Markham chapter.</p>
+          <a class="button primary light" href="#join">Become a founding partner <span aria-hidden="true">→</span></a>
+        </div>
+        <ul class="partner-list">
+          <li><span>01</span> Help residents find what you already do well.</li>
+          <li><span>02</span> Host a gathering or be part of a route.</li>
+          <li><span>03</span> Co-create an accurate, useful local listing.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="join container" id="join" aria-labelledby="join-heading">
+      <div>
+        <p class="eyebrow">A local beginning</p>
+        <h2 id="join-heading">Help shape Vitalicious Markham.</h2>
+        <p>We are preparing the first chapter with residents, food partners, movement hosts, registered dietitians and cultural knowledge holders. Add your name to hear when participation opens.</p>
+      </div>
+      <form class="interest-form" action="#" method="post">
+        <label for="email">Email address</label>
+        <div class="form-row">
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+          <button type="submit">Keep me posted <span aria-hidden="true">→</span></button>
+        </div>
+        <p>This form is a visual scaffold only. Connect it to a consented mailing-list service before launch.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="wordmark" href="#top">VITALICIOUS<span class="support-mark">V</span></a>
+        <p>Healthy movement and good food, held up by community.</p>
+      </div>
+      <div>
+        <p class="footer-label">Explore</p>
+        <a href="#move">Vitaspeed</a>
+        <a href="#nourish">Food</a>
+        <a href="#partners">For partners</a>
+      </div>
+      <div>
+        <p class="footer-label">Status</p>
+        <p>Pre-launch<br />Markham, Ontario</p>
+      </div>
+    </div>
+  </footer>
+</BaseLayout>
