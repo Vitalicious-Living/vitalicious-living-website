@@ -50,11 +50,13 @@ h3 { margin-bottom: 12px; font-size: 2rem; }
 .two-ways { padding: 72px 0 110px; }
 .section-heading { max-width: 670px; margin-bottom: 42px; }
 .section-heading > p:last-child { max-width: 570px; font-size: 1.1rem; }
-.offer-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+.offer-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .85fr); gap: 18px; }
 .offer-card { position: relative; min-height: 330px; padding: 42px; overflow: hidden; background: #fffef8; }
+.food-card { background: var(--sun); }
+.primary-offer { min-height: 390px; }
+.primary-offer h3 { font-size: clamp(2.35rem, 3.5vw, 3.5rem); }
 .run-card { background: var(--forest); color: var(--paper); }
 .run-card .eyebrow { color: var(--sun); }
-.food-card { background: var(--sun); }
 .card-symbol { position: absolute; right: 28px; bottom: 8px; opacity: .16; font-family: var(--serif); font-size: 10rem; line-height: 1; }
 .offer-card > p:not(.eyebrow) { max-width: 420px; }
 .offer-card a { position: absolute; bottom: 38px; font-weight: 700; text-decoration: none; }
@@ -63,9 +65,13 @@ h3 { margin-bottom: 12px; font-size: 2rem; }
 .narrow { max-width: 680px; }
 .pillar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .pillar { min-height: 230px; padding: 26px; border-top: 2px solid var(--forest); background: var(--paper); }
+.pillar.primary { grid-column: span 2; min-height: 270px; background: var(--sun); }
 .pillar > span { display: block; margin-bottom: 35px; color: var(--clementine); font-size: 2.2rem; }
+.pillar.primary > span { color: var(--forest); font-size: 3rem; }
 .pillar h3 { margin-bottom: 8px; font-size: 1.75rem; }
+.pillar.primary h3 { font-size: 2.35rem; }
 .pillar p { margin-bottom: 0; font-size: .96rem; }
+.pillar.primary p { max-width: 480px; font-size: 1.08rem; }
 
 .food-standard { display: grid; grid-template-columns: 190px 1fr; gap: 54px; align-items: start; padding: 105px 0; }
 .v-badge { display: grid; width: 160px; aspect-ratio: 1; place-items: center; border-radius: 50%; background: var(--clementine); color: var(--paper); font-family: var(--serif); font-size: 7rem; transform: rotate(-8deg); }
@@ -107,6 +113,7 @@ h3 { margin-bottom: 12px; font-size: 2rem; }
   .hero { min-height: 0; padding: 52px 0 70px; }
   .hero-art { min-height: 350px; }
   .offer-grid, .pillar-grid { grid-template-columns: 1fr; }
+  .pillar.primary { grid-column: auto; }
   .offer-card { min-height: 285px; padding: 30px; }
   .support-section, .partners, .join { padding: 72px 0; }
   .food-standard { grid-template-columns: 1fr; gap: 28px; padding: 72px 0; }

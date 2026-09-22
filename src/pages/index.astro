@@ -2,18 +2,18 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const pillars = [
-  ['Move', 'Vitaspeed runs, walks and other welcoming ways to move together at your pace.', '↗'],
-  ['Nourish', 'Whole, flavourful food and the local people who make it easier to find.', '◒'],
-  ['Rest', 'Recovery, water and a sustainable rhythm for a good day.', '☾'],
-  ['Connect', 'Habits that last because neighbours and partners make room for them.', '✦']
+  ['Nourish', 'Our primary function: whole, flavourful food and the local people who make it easier to find.', '◒', 'primary'],
+  ['Move', 'Vitaspeed runs, walks and other welcoming ways to move together at your pace.', '↗', 'supporting'],
+  ['Rest', 'Recovery, water and a sustainable rhythm for a good day.', '☾', 'supporting'],
+  ['Connect', 'Habits that last because neighbours and partners make room for them.', '✦', 'supporting']
 ];
 ---
 <BaseLayout>
   <header class="site-header container">
     <a class="wordmark" href="#top" aria-label="Vitalicious Living home">VITALICIOUS<span class="support-mark">V</span></a>
     <nav aria-label="Primary navigation">
-      <a href="#move">Vitaspeed</a>
       <a href="#nourish">Food</a>
+      <a href="#move">Vitaspeed</a>
       <a href="#partners">For partners</a>
       <a href="#about">About</a>
     </nav>
@@ -24,10 +24,10 @@ const pillars = [
       <div class="hero-copy">
         <p class="eyebrow">Beginning in Markham</p>
         <h1 id="hero-heading">Healthy living<br />needs something<br /><span>to lean on.</span></h1>
-        <p class="intro">Vitalicious Living brings movement and good food into one local community. Find people, places and practical ways to make a good day easier to keep.</p>
+        <p class="intro">Vitalicious Living starts with good food, then connects you with movement, rest and people who make a good day easier to keep.</p>
         <div class="actions">
-          <a class="button primary" href="#move">Explore Vitaspeed <span aria-hidden="true">→</span></a>
-          <a class="button text-link" href="#nourish">How food works <span aria-hidden="true">→</span></a>
+          <a class="button primary" href="#nourish">Explore food <span aria-hidden="true">→</span></a>
+          <a class="button text-link" href="#move">Explore Vitaspeed <span aria-hidden="true">→</span></a>
         </div>
       </div>
       <div class="hero-art" aria-hidden="true">
@@ -42,23 +42,23 @@ const pillars = [
     <section class="two-ways container" aria-labelledby="two-ways-heading">
       <div class="section-heading">
         <p class="eyebrow">The platform</p>
-        <h2 id="two-ways-heading">Two ways to feel good.</h2>
-        <p>Move with people who cheer you on, then find food and local businesses that share the same idea of a good day.</p>
+        <h2 id="two-ways-heading">Start with good food.</h2>
+        <p>Nourish is the heart of Vitalicious. Movement, rest and connection help make a food-led routine easier to begin and keep.</p>
       </div>
       <div class="offer-grid">
-        <article id="move" class="offer-card run-card">
-          <span class="card-symbol" aria-hidden="true">↗</span>
-          <p class="eyebrow">Move</p>
-          <h3>Vitaspeed</h3>
-          <p>Community movement for different starting points, from a first walk or 5K to a longer-running goal.</p>
-          <a href="#join">Help shape the first sessions <span aria-hidden="true">→</span></a>
-        </article>
-        <article id="nourish" class="offer-card food-card">
+        <article id="nourish" class="offer-card food-card primary-offer">
           <span class="card-symbol" aria-hidden="true">◒</span>
-          <p class="eyebrow">Nourish</p>
+          <p class="eyebrow">Primary function: Nourish</p>
           <h3>Food with a clear story</h3>
           <p>We are building a local directory of food, people and places. Published items will show their source, review status and availability.</p>
           <a href="#food-standard">Our food standard <span aria-hidden="true">→</span></a>
+        </article>
+        <article id="move" class="offer-card run-card supporting-offer">
+          <span class="card-symbol" aria-hidden="true">↗</span>
+          <p class="eyebrow">Supporting function: Move</p>
+          <h3>Vitaspeed</h3>
+          <p>Community movement for different starting points, from a first walk or 5K to a longer-running goal.</p>
+          <a href="#join">Help shape the first sessions <span aria-hidden="true">→</span></a>
         </article>
       </div>
     </section>
@@ -68,11 +68,11 @@ const pillars = [
         <div class="section-heading narrow">
           <p class="eyebrow">What holds us up</p>
           <h2 id="support-heading">Every symbol rests on the same V.</h2>
-          <p>The V stands for the coaches, cooks, neighbours and partners who make healthy habits easier to keep.</p>
+          <p>Nourish is the leading composition. Move, Rest and Connect support the cooks, neighbours and partners who make food-led habits easier to keep.</p>
         </div>
         <div class="pillar-grid">
-          {pillars.map(([name, detail, symbol]) => (
-            <article class="pillar">
+          {pillars.map(([name, detail, symbol, priority]) => (
+            <article class:list={['pillar', priority]}>
               <span aria-hidden="true">{symbol}</span>
               <h3>{name}</h3>
               <p>{detail}</p>
@@ -129,12 +129,12 @@ const pillars = [
     <div class="container footer-grid">
       <div>
         <a class="wordmark" href="#top">VITALICIOUS<span class="support-mark">V</span></a>
-        <p>Healthy movement and good food, held up by community.</p>
+        <p>Good food, supported by movement, rest, connection and community.</p>
       </div>
       <div>
         <p class="footer-label">Explore</p>
-        <a href="#move">Vitaspeed</a>
         <a href="#nourish">Food</a>
+        <a href="#move">Vitaspeed</a>
         <a href="#partners">For partners</a>
       </div>
       <div>
