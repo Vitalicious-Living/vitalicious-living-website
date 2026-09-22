@@ -2,6 +2,10 @@
 
 This is a public Astro website. Use Canadian English. Follow the approved brand and public narrative in the private `vitalicious-living-citable` repository.
 
+## Development server
+
+The `dev` script must explicitly bind to `0.0.0.0` so the site can be reached from approved Tailnet devices. Use a terminating `npm run check` or `npm run build` for verification; do not start a persistent server during automated validation.
+
 ## Public-claim boundaries
 
 - Never invent locations, schedules, partners, menus, reviewer names, or availability.
