@@ -2,20 +2,50 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const pillars = [
-  ['Nourish', 'Our primary function: whole, flavourful food and the local people who make it easier to find.', '◒', 'primary'],
-  ['Move', 'Vitaspeed runs, walks and other welcoming ways to move together at your pace.', '↗', 'supporting'],
-  ['Rest', 'Recovery, water and a sustainable rhythm for a good day.', '☾', 'supporting'],
-  ['Connect', 'Habits that last because neighbours and partners make room for them.', '✦', 'supporting']
+  {
+    name: 'Nourish',
+    detail: 'Whole, flavourful food and the local people who make it easier to find.',
+    mark: '/brand/nourish.png',
+    priority: 'primary'
+  },
+  {
+    name: 'Move',
+    detail: 'Vitaspeed runs, walks and other welcoming ways to move together at your pace.',
+    mark: '/brand/move.png',
+    priority: 'supporting'
+  },
+  {
+    name: 'Rest',
+    detail: 'Recovery, water and a sustainable rhythm for a good day.',
+    mark: '/brand/rest.png',
+    priority: 'supporting'
+  },
+  {
+    name: 'Connect',
+    detail: 'Habits that last because neighbours and partners make room for them.',
+    mark: '/brand/connect.png',
+    priority: 'supporting'
+  }
+];
+
+const partnerIdeas = [
+  { title: 'Get found', detail: 'Help residents find what you already do well.', mark: '/brand/sun.png' },
+  { title: 'Host the community', detail: 'Host a gathering or be part of a route.', mark: '/brand/heart.png' },
+  { title: 'Cook together', detail: 'Co-create an accurate, useful local listing.', mark: '/brand/bean.png' }
 ];
 ---
 <BaseLayout>
   <header class="site-header container">
-    <a class="wordmark" href="#top" aria-label="Vitalicious Living home">VITALICIOUS<span class="support-mark">V</span></a>
+    <a class="wordmark" href="#top" aria-label="Vitalicious Living home">
+      <img class="logo-mark" src="/brand/logo-mark.png" alt="" width="64" height="52" />
+      <span>VITALICIOUS</span>
+    </a>
     <nav aria-label="Primary navigation">
       <a href="#nourish">Food</a>
       <a href="#move">Vitaspeed</a>
       <a href="#partners">For partners</a>
       <a href="#about">About</a>
+      <a class="button primary compact" href="#join">Join the list</a>
     </nav>
   </header>
 
@@ -26,16 +56,12 @@ const pillars = [
         <h1 id="hero-heading">Healthy living<br />needs something<br /><span>to lean on.</span></h1>
         <p class="intro">Vitalicious Living starts with good food, then connects you with movement, rest and people who make a good day easier to keep.</p>
         <div class="actions">
-          <a class="button primary" href="#nourish">Explore food <span aria-hidden="true">→</span></a>
-          <a class="button text-link" href="#move">Explore Vitaspeed <span aria-hidden="true">→</span></a>
+          <a class="button primary" href="#nourish">Explore food</a>
+          <a class="button text-link" href="#move">Explore Vitaspeed</a>
         </div>
       </div>
       <div class="hero-art" aria-hidden="true">
-        <div class="sun"></div>
-        <div class="plant plant-left">✦</div>
-        <div class="plant plant-right">✿</div>
-        <div class="v-shape"></div>
-        <div class="hero-bowl">●</div>
+        <img class="hero-mark" src="/brand/hero-mark.png" alt="" width="980" height="955" />
       </div>
     </section>
 
@@ -47,18 +73,18 @@ const pillars = [
       </div>
       <div class="offer-grid">
         <article id="nourish" class="offer-card food-card primary-offer">
-          <span class="card-symbol" aria-hidden="true">◒</span>
+          <img class="offer-mark" src="/brand/kitchen-mark.png" alt="" width="220" height="200" />
           <p class="eyebrow">Primary function: Nourish</p>
           <h3>Food with a clear story</h3>
           <p>We are building a local directory of food, people and places. Published items will show their source, review status and availability.</p>
-          <a href="#food-standard">Our food standard <span aria-hidden="true">→</span></a>
+          <a class="button primary" href="#food-standard">Our food standard</a>
         </article>
         <article id="move" class="offer-card run-card supporting-offer">
-          <span class="card-symbol" aria-hidden="true">↗</span>
+          <img class="offer-mark dark-mark" src="/brand/vitaspeed-mark.png" alt="" width="220" height="196" />
           <p class="eyebrow">Supporting function: Move</p>
           <h3>Vitaspeed</h3>
           <p>Community movement for different starting points, from a first walk or 5K to a longer-running goal.</p>
-          <a href="#join">Help shape the first sessions <span aria-hidden="true">→</span></a>
+          <a class="button accent" href="#join">Help shape the first sessions</a>
         </article>
       </div>
     </section>
@@ -67,13 +93,13 @@ const pillars = [
       <div class="container">
         <div class="section-heading narrow">
           <p class="eyebrow">What holds us up</p>
-          <h2 id="support-heading">Every symbol rests on the same V.</h2>
-          <p>Nourish is the leading composition. Move, Rest and Connect support the cooks, neighbours and partners who make food-led habits easier to keep.</p>
+          <h2 id="support-heading">Healthy living is easier with support.</h2>
+          <p>Food leads the way. Move, Rest and Connect help the cooks, neighbours and partners who make everyday habits easier to keep.</p>
         </div>
         <div class="pillar-grid">
-          {pillars.map(([name, detail, symbol, priority]) => (
-            <article class:list={['pillar', priority]}>
-              <span aria-hidden="true">{symbol}</span>
+          {pillars.map(({ name, detail, mark, priority }) => (
+            <article class:list={['pillar', priority === 'primary' && 'is-primary']}>
+              <img class="pillar-mark" src={mark} alt="" width="180" height="180" />
               <h3>{name}</h3>
               <p>{detail}</p>
             </article>
@@ -83,7 +109,7 @@ const pillars = [
     </section>
 
     <section class="food-standard container" id="food-standard" aria-labelledby="food-heading">
-      <div class="v-badge" aria-hidden="true">V</div>
+      <img class="standard-mark" src="/brand/nourish.png" alt="" width="220" height="220" />
       <div>
         <p class="eyebrow">Source-aware food</p>
         <h2 id="food-heading">Good food deserves a clear story.</h2>
@@ -98,12 +124,18 @@ const pillars = [
           <p class="eyebrow">For local partners</p>
           <h2 id="partner-heading">Make vitality more available where you are.</h2>
           <p>Restaurants, cafés, grocers, studios, community spaces and organisers can help create the first Vitalicious Markham chapter.</p>
-          <a class="button primary light" href="#join">Become a founding partner <span aria-hidden="true">→</span></a>
+          <a class="button primary light" href="#join">Become a founding partner</a>
         </div>
         <ul class="partner-list">
-          <li><span>01</span> Help residents find what you already do well.</li>
-          <li><span>02</span> Host a gathering or be part of a route.</li>
-          <li><span>03</span> Co-create an accurate, useful local listing.</li>
+          {partnerIdeas.map(({ title, detail, mark }) => (
+            <li>
+              <img src={mark} alt="" width="64" height="64" />
+              <div>
+                <strong>{title}</strong>
+                <span>{detail}</span>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </section>
@@ -118,7 +150,7 @@ const pillars = [
         <label for="email">Email address</label>
         <div class="form-row">
           <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
-          <button type="submit">Keep me posted <span aria-hidden="true">→</span></button>
+          <button type="submit">Keep me posted</button>
         </div>
         <p>This form is a visual scaffold only. Connect it to a consented mailing-list service before launch.</p>
       </form>
@@ -128,7 +160,10 @@ const pillars = [
   <footer class="site-footer">
     <div class="container footer-grid">
       <div>
-        <a class="wordmark" href="#top">VITALICIOUS<span class="support-mark">V</span></a>
+        <a class="wordmark" href="#top">
+          <img class="logo-mark" src="/brand/logo-mark.png" alt="" width="64" height="52" />
+          <span>VITALICIOUS</span>
+        </a>
         <p>Good food, supported by movement, rest, connection and community.</p>
       </div>
       <div>
