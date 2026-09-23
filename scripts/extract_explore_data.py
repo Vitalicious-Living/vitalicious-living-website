@@ -32,6 +32,8 @@ FULL_BOOKS = [
     ("The Wisdom of the Chinese Kitchen", "Grace Young with Alan Richardson", "1999"),
     ("Vegetable Kingdom", "Bryant Terry", "2020"),
     ("The How Not to Age Cookbook", "Michael Greger", "2023"),
+    ("The How Not to Die Cookbook", "Michael Greger", "2017"),
+    ("The How Not to Diet Cookbook", "Michael Greger", "2019"),
     ("The Blue Zones Kitchen One Pot Meals", "Dan Buettner", "2024"),
 ]
 
@@ -42,8 +44,6 @@ INDEX_BOOKS = [
     ("Mediterranean Diet Cookbook for Beginners", "Enzo Reds", "2021"),
     ("Plenty More", "Yotam Ottolenghi", "2014"),
     ("Salt Fat Acid Heat", "Samin Nosrat", "2017"),
-    ("The How Not to Die Cookbook", "Michael Greger", "2017"),
-    ("The How Not to Diet Cookbook", "Michael Greger", "2019"),
 ]
 
 IMG = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
@@ -119,6 +119,8 @@ def select_and_copy_display_images(book_dir: Path, rel_paths: list[str], image_r
     """
     candidates = []
     for rel in rel_paths:
+        if Path(rel).name.lower() in {"none", "null"}:
+            continue
         src = book_dir / rel
         if not src.exists():
             raise FileNotFoundError(f"{book_dir.name}: missing image {rel}")

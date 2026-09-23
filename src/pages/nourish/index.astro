@@ -36,7 +36,6 @@ const books: ExploreBook[] = JSON.parse(
   fs.readFileSync(path.resolve(process.cwd(), 'src/data/explore/books.json'), 'utf-8')
 );
 const fullCount = data.filter((r) => !r.io).length;
-const ioCount = data.length - fullCount;
 const imgCount = data.reduce((n, r) => n + (r.imgs ? r.imgs.length : 0), 0);
 ---
 
@@ -54,7 +53,7 @@ const imgCount = data.reduce((n, r) => n + (r.imgs ? r.imgs.length : 0), 0);
       <span>VITALICIOUS</span>
     </a>
     <nav aria-label="Primary navigation">
-      <a href="/explore/" aria-current="page">Explore Food</a>
+      <a href="/nourish/" aria-current="page">Explore Food</a>
       <a href="/#move">Vitaspeed</a>
       <a href="/#partners">For partners</a>
       <a href="/#about">About</a>
@@ -117,8 +116,8 @@ const imgCount = data.reduce((n, r) => n + (r.imgs ? r.imgs.length : 0), 0);
         <p>Good food, supported by movement, rest, connection and community.</p>
       </div>
       <div>
-        <p class="footer-label">Explore</p>
-        <a href="/explore/">Food</a>
+        <p class="footer-label">Nourish</p>
+        <a href="/nourish/">Food</a>
         <a href="/#move">Vitaspeed</a>
         <a href="/#partners">For partners</a>
       </div>
@@ -139,6 +138,31 @@ const imgCount = data.reduce((n, r) => n + (r.imgs ? r.imgs.length : 0), 0);
   let BOOKS = [];
   const state = { q: '', book: 'all', sort: 'added', page: 1, showNoPhoto: false };
 
+  function restoreStateFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    state.q = params.get('q') || '';
+    state.book = params.get('book') || 'all';
+    state.sort = ['added', 'az', 'liked'].includes(params.get('sort')) ? params.get('sort') : 'added';
+    state.showNoPhoto = params.get('withoutPhotos') === '1';
+    state.page = 1;
+  }
+
+  function persistStateToUrl() {
+    const url = new URL(window.location.href);
+    url.search = '';
+    if (state.q) url.searchParams.set('q', state.q);
+    if (state.book !== 'all') url.searchParams.set('book', state.book);
+    if (state.sort !== 'added') url.searchParams.set('sort', state.sort);
+    if (state.showNoPhoto) url.searchParams.set('withoutPhotos', '1');
+    window.history.pushState({}, '', url);
+  }
+
+  function renderControls() {
+    document.getElementById('ex-q').value = state.q;
+    document.getElementById('ex-sort').value = state.sort;
+    document.getElementById('ex-nophoto').checked = state.showNoPhoto;
+  }
+
   function card(r) {
     const s = sampleData(r);
     const hero = r.imgs && r.imgs.length ? r.imgs[0] : null;
@@ -146,7 +170,7 @@ const imgCount = data.reduce((n, r) => n + (r.imgs ? r.imgs.length : 0), 0);
     const circles = s.vendors.slice(0, 3).map((v) =>
       `<span class="c" style="background:${AVATAR_COLORS[hash32(v.name) % AVATAR_COLORS.length]}" title="${esc(v.name)} (sample)">${initials(v.name)}</span>`
     ).join('');
-    const href = r.io ? null : `/explore/${r.id}/`;
+    const href = r.io ? null : `/nourish/${r.id}/`;
     const titleHtml = href
       ? `<h3><a href="${href}">${esc(r.title)}</a></h3>`
       : `<h3>${esc(r.title)} <span class="ex-chip grey">index</span></h3>`;
@@ -169,21 +193,29 @@ const imgCount = data.reduce((n, r) => n + (r.imgs ? r.imgs.length : 0), 0);
     </article>`;
   }
 
-  function filtered() {
+  function recipesForBook(book) {
+    if (book === 'vault') return RECIPES.filter((r) => r.io);
+    if (book === 'all') return RECIPES.filter((r) => !r.io);
+    return RECIPES.filter((r) => r.b === book);
+  }
+
+  function applyGlobalFilters(list, book) {
     const q = state.q.trim().toLowerCase();
-    let list;
-    if (state.book === 'vault') list = RECIPES.filter((r) => r.io);
-    else if (state.book === 'all') list = RECIPES.filter((r) => !r.io);
-    else list = RECIPES.filter((r) => r.b === state.book);
-    if (state.book !== 'vault' && !state.showNoPhoto) {
-      list = list.filter((r) => r.imgs && r.imgs.length > 0);
+    let filteredList = list;
+    if (book !== 'vault' && !state.showNoPhoto) {
+      filteredList = filteredList.filter((r) => r.imgs && r.imgs.length > 0);
     }
     if (q) {
-      list = list.filter((r) =>
+      filteredList = filteredList.filter((r) =>
         r.title.toLowerCase().includes(q) ||
         r.book.toLowerCase().includes(q) ||
         (r.family || '').toLowerCase().includes(q));
     }
+    return filteredList;
+  }
+
+  function filtered() {
+    let list = applyGlobalFilters(recipesForBook(state.book), state.book);
     if (state.sort === 'az') list = [...list].sort((a, b) => a.title.localeCompare(b.title));
     if (state.sort === 'liked') list = [...list].sort((a, b) => sampleData(b).likes - sampleData(a).likes);
     return list;
@@ -201,12 +233,12 @@ const imgCount = data.reduce((n, r) => n + (r.imgs ? r.imgs.length : 0), 0);
 
   function renderChips() {
     const chips = document.getElementById('ex-chips');
-    const ioCount = RECIPES.filter((r) => r.io).length;
-    const parts = [`<button data-book="all" class="${state.book === 'all' ? 'on' : ''}">All recent books</button>`];
+    const countForBook = (book) => applyGlobalFilters(recipesForBook(book), book).length;
+    const parts = [`<button data-book="all" class="${state.book === 'all' ? 'on' : ''}">All recent books (${countForBook('all')})</button>`];
     for (const b of BOOKS.filter((b) => b.full)) {
-      parts.push(`<button data-book="${b.slug}" class="${state.book === b.slug ? 'on' : ''}">${esc(b.title)} (${b.count})</button>`);
+      parts.push(`<button data-book="${b.slug}" class="${state.book === b.slug ? 'on' : ''}">${esc(b.title)} (${countForBook(b.slug)})</button>`);
     }
-    parts.push(`<button data-book="vault" class="${state.book === 'vault' ? 'on' : ''}">Whole vault index (${ioCount})</button>`);
+    parts.push(`<button data-book="vault" class="${state.book === 'vault' ? 'on' : ''}">Whole vault index (${countForBook('vault')})</button>`);
     chips.innerHTML = parts.join('');
   }
 
@@ -217,6 +249,9 @@ const imgCount = data.reduce((n, r) => n + (r.imgs ? r.imgs.length : 0), 0);
     ]);
     RECIPES = r;
     BOOKS = b;
+    restoreStateFromUrl();
+    if (!['all', 'vault', ...BOOKS.filter((b) => b.full).map((b) => b.slug)].includes(state.book)) state.book = 'all';
+    renderControls();
     renderChips();
     render();
 
@@ -226,19 +261,27 @@ const imgCount = data.reduce((n, r) => n + (r.imgs ? r.imgs.length : 0), 0);
     let deb;
     q.addEventListener('input', () => {
       clearTimeout(deb);
-      deb = setTimeout(() => { state.q = q.value; state.page = 1; render(); }, 140);
+      deb = setTimeout(() => { state.q = q.value; state.page = 1; persistStateToUrl(); renderChips(); render(); }, 140);
     });
-    sort.addEventListener('change', () => { state.sort = sort.value; state.page = 1; render(); });
-    nophoto.addEventListener('change', () => { state.showNoPhoto = nophoto.checked; state.page = 1; render(); });
+    sort.addEventListener('change', () => { state.sort = sort.value; state.page = 1; persistStateToUrl(); render(); });
+    nophoto.addEventListener('change', () => { state.showNoPhoto = nophoto.checked; state.page = 1; persistStateToUrl(); renderChips(); render(); });
     document.getElementById('ex-chips').addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-book]');
       if (!btn) return;
       state.book = btn.dataset.book;
       state.page = 1;
+      persistStateToUrl();
       renderChips();
       render();
     });
     document.getElementById('ex-more').addEventListener('click', () => { state.page += 1; render(); });
+    window.addEventListener('popstate', () => {
+      restoreStateFromUrl();
+      if (!['all', 'vault', ...BOOKS.filter((b) => b.full).map((b) => b.slug)].includes(state.book)) state.book = 'all';
+      renderControls();
+      renderChips();
+      render();
+    });
   };
 
   boot();

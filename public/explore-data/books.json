@@ -54,6 +54,24 @@
   "full": true
  },
  {
+  "slug": "the-how-not-to-die-cookbook",
+  "title": "The How Not to Die Cookbook",
+  "author": "Michael Greger",
+  "year": "2017",
+  "count": 106,
+  "images": 93,
+  "full": true
+ },
+ {
+  "slug": "the-how-not-to-diet-cookbook",
+  "title": "The How Not to Diet Cookbook",
+  "author": "Michael Greger",
+  "year": "2019",
+  "count": 112,
+  "images": 0,
+  "full": true
+ },
+ {
   "slug": "the-blue-zones-kitchen-one-pot-meals",
   "title": "The Blue Zones Kitchen One Pot Meals",
   "author": "Dan Buettner",
@@ -108,22 +126,6 @@
   "author": "Samin Nosrat",
   "year": "2017",
   "count": 104,
-  "full": false
- },
- {
-  "slug": "the-how-not-to-die-cookbook",
-  "title": "The How Not to Die Cookbook",
-  "author": "Michael Greger",
-  "year": "2017",
-  "count": 106,
-  "full": false
- },
- {
-  "slug": "the-how-not-to-diet-cookbook",
-  "title": "The How Not to Diet Cookbook",
-  "author": "Michael Greger",
-  "year": "2019",
-  "count": 112,
   "full": false
  },
  {

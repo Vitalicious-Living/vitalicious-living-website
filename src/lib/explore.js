@@ -54,6 +54,8 @@ export const BOOK_NOTES = {
   "the-wisdom-of-the-chinese-kitchen": "Grace Young's Cantonese family cooking: market wisdom, wok breath, celebration foods and healing soups.",
   "vegetable-kingdom": "Bryant Terry's vegetable-led vegan cooking with wide cultural breadth and a soundtrack for every chapter.",
   "the-how-not-to-age-cookbook": "Michael Greger's evidence-screened longevity cookbook built on whole-food plant-based patterns.",
+  "the-how-not-to-die-cookbook": "Michael Greger's whole-food plant-based cookbook inspired by the nutrition research discussed in How Not to Die.",
+  "the-how-not-to-diet-cookbook": "Michael Greger's whole-food plant-based cookbook focused on satisfying, fibre-rich everyday meals.",
   "the-blue-zones-kitchen-one-pot-meals": "Dan Buettner's one-pot format applying Blue Zones longevity food patterns to low-friction home cooking.",
 };
 

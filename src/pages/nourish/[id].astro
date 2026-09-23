@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/explore.css';
-import { sampleData, renderBody, esc, initials, hash32, AVATAR_COLORS, BOOK_NOTES } from '../../lib/explore.js';
+import { sampleData, renderBody, initials, hash32, AVATAR_COLORS, BOOK_NOTES } from '../../lib/explore.js';
 
 export interface ExploreRecipe {
   id: string;
@@ -49,7 +49,7 @@ const title = `${r.title} (demo) | Vitalicious Living`;
       <span>VITALICIOUS</span>
     </a>
     <nav aria-label="Primary navigation">
-      <a href="/explore/" aria-current="page">Explore Food</a>
+      <a href="/nourish/" aria-current="page">Explore Food</a>
       <a href="/#move">Vitaspeed</a>
       <a href="/#partners">For partners</a>
       <a href="/#about">About</a>
@@ -58,7 +58,7 @@ const title = `${r.title} (demo) | Vitalicious Living`;
 
   <main class="explore">
     <div class="ex-post">
-      <a class="ex-back" href="/explore/">&larr; Explore Food</a>
+      <a class="ex-back" href="/nourish/">&larr; Explore Food</a>
       {hero && (
         <div class="ex-heroimg">
           <img src={hero} alt={r.title} />
@@ -202,8 +202,8 @@ const title = `${r.title} (demo) | Vitalicious Living`;
         <p>Good food, supported by movement, rest, connection and community.</p>
       </div>
       <div>
-        <p class="footer-label">Explore</p>
-        <a href="/explore/">Food</a>
+        <p class="footer-label">Nourish</p>
+        <a href="/nourish/">Food</a>
         <a href="/#move">Vitaspeed</a>
         <a href="/#partners">For partners</a>
       </div>
