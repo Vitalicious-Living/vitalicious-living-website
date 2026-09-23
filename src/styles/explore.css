@@ -1,0 +1,172 @@
+/* Explore Food demo styles. Coexists with global.css; all rules scoped
+   under .explore except shared utility classes prefixed ex-. */
+
+.explore { max-width: 1180px; margin: 0 auto; padding: 22px 20px 48px; }
+
+.ex-demo-banner {
+  background: #fff7ed; color: #7c2d12; border-bottom: 1px solid #fed7aa;
+  padding: 8px 20px; font-size: 13px; line-height: 1.45; text-align: center;
+}
+
+.ex-chip {
+  display: inline-block; padding: 2px 10px; border-radius: 999px;
+  background: #e7f4ed; color: #14532d; font-size: 12px; font-weight: 650;
+}
+.ex-chip.grey { background: #eef1f4; color: #5d6b7a; }
+.ex-sample-tag {
+  display: inline-block; padding: 1px 7px; border-radius: 6px;
+  background: #fef3c7; color: #92400e; font-size: 10.5px; font-weight: 750;
+  letter-spacing: .04em; vertical-align: middle;
+}
+
+.explore h1.page { font-size: 30px; margin: 8px 0 4px; letter-spacing: -.01em; }
+.explore p.sub { color: #5d6b7a; margin: 0 0 18px; }
+
+.ex-hero { display: flex; flex-wrap: wrap; gap: 12px; margin: 6px 0 20px; }
+.ex-stat {
+  background: #fff; border: 1px solid #e3e8ee; border-radius: 16px;
+  padding: 12px 18px; min-width: 150px;
+}
+.ex-stat b { display: block; font-size: 22px; color: #14532d; }
+.ex-stat span { font-size: 12.5px; color: #5d6b7a; }
+
+.ex-controls { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 14px; align-items: center; }
+.ex-controls input[type="search"] {
+  flex: 1 1 260px; padding: 10px 14px; border: 1px solid #e3e8ee;
+  border-radius: 12px; font-size: 15px; background: #fff;
+}
+.ex-controls select { padding: 9px 12px; border-radius: 12px; border: 1px solid #e3e8ee; background: #fff; font-size: 14px; }
+.ex-toggle {
+  display: inline-flex; align-items: center; gap: 7px; color: #455564;
+  font-size: 13.5px; font-weight: 650; white-space: nowrap;
+}
+.ex-toggle input { accent-color: #1f7a4d; width: 16px; height: 16px; }
+.ex-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.ex-chips button {
+  border: 1px solid #e3e8ee; background: #fff; color: #5d6b7a;
+  padding: 6px 13px; border-radius: 999px; font-size: 13.5px; font-weight: 600; cursor: pointer;
+}
+.ex-chips button.on { background: #14532d; border-color: #14532d; color: #fff; }
+
+.ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+
+.ex-card {
+  background: #fff; border: 1px solid #e3e8ee; border-radius: 16px;
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: box-shadow .15s ease, transform .15s ease;
+  text-align: left; font: inherit; color: inherit; padding: 0;
+}
+.ex-card:hover { box-shadow: 0 8px 22px rgba(20, 60, 40, .10); transform: translateY(-2px); }
+.ex-card .thumb {
+  position: relative; aspect-ratio: 4 / 3; overflow: hidden;
+  background: linear-gradient(135deg, #dcefe5, #bfe0d1); display: block; text-decoration: none;
+}
+.ex-card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ex-card .thumb .noimg {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #14532d; font-weight: 800; font-size: 34px; opacity: .5;
+}
+.ex-card .thumb .fam {
+  position: absolute; left: 10px; bottom: 10px; background: rgba(255,255,255,.92);
+  border-radius: 8px; padding: 2px 9px; font-size: 11.5px; font-weight: 700; color: #14532d;
+}
+.ex-card .body { padding: 12px 14px 13px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.ex-card h3 { margin: 0; font-size: 15.5px; line-height: 1.3; }
+.ex-card h3 a { color: #1c2431; text-decoration: none; }
+.ex-card h3 a:hover { text-decoration: underline; }
+.ex-card .cite { font-size: 12.5px; color: #5d6b7a; }
+.ex-card .meta { margin-top: auto; display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: #5d6b7a; flex-wrap: wrap; }
+
+.ex-circles { display: flex; }
+.ex-circles .c {
+  width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; color: #fff; margin-left: -7px; background: #1f7a4d;
+}
+.ex-circles .c:first-child { margin-left: 0; }
+.ex-like { display: inline-flex; align-items: center; gap: 4px; }
+.ex-like .heart { color: #e0245e; font-size: 14px; }
+
+.ex-loadmore {
+  display: block; margin: 24px auto 0; padding: 11px 26px; border-radius: 999px;
+  border: 1.5px solid #1f7a4d; color: #14532d; background: #fff; font-weight: 700;
+  cursor: pointer; font-size: 14.5px;
+}
+.ex-loadmore:hover { background: #e7f4ed; }
+
+/* post page */
+
+.ex-post { max-width: 860px; margin: 0 auto; }
+.ex-back { display: inline-block; margin-bottom: 14px; font-weight: 650; font-size: 14px; }
+.ex-heroimg { aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; border: 1px solid #e3e8ee; background: #dcefe5; }
+.ex-heroimg img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center; }
+.ex-thumbs { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.ex-thumbs img { width: 84px; height: 64px; object-fit: cover; border-radius: 10px; border: 1px solid #e3e8ee; }
+.ex-post h1 { font-size: 30px; margin: 18px 0 6px; letter-spacing: -.015em; }
+
+.ex-citation {
+  background: #e7f4ed; border: 1px solid #cfe8db; border-radius: 12px;
+  padding: 12px 16px; font-size: 13.5px; margin: 12px 0 6px; color: #17402c;
+}
+.ex-citation b { color: #14532d; }
+
+.ex-socialrow {
+  display: flex; align-items: center; gap: 16px; margin: 14px 0 6px; flex-wrap: wrap;
+  border-bottom: 1px solid #e3e8ee; padding-bottom: 14px;
+}
+.ex-socialrow .act { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 14px; color: #5d6b7a; }
+.ex-socialrow .act.on { color: #e0245e; }
+.ex-socialrow .locs { display: flex; align-items: center; gap: 8px; margin-left: auto; font-size: 13px; color: #5d6b7a; }
+.ex-circles.lg .c { width: 30px; height: 30px; font-size: 12px; margin-left: -9px; }
+
+.ex-block { margin-top: 26px; }
+.ex-block > h2 { font-size: 19px; margin: 0 0 10px; color: #14532d; }
+
+.ex-recipe-text {
+  background: #fff; border: 1px solid #e3e8ee; border-radius: 16px;
+  padding: 20px 24px; font-size: 15px;
+}
+.ex-recipe-text p { margin: 0 0 10px; }
+.ex-recipe-text ul, .ex-recipe-text ol { margin: 6px 0 12px; padding-left: 22px; }
+.ex-recipe-text li { margin: 2px 0; }
+.ex-recipe-text .rhead {
+  font-weight: 800; letter-spacing: .03em; color: #14532d; margin: 14px 0 6px; font-size: 13.5px;
+}
+
+.ex-vendorrow { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.ex-vendor {
+  background: #fff; border: 1px solid #e3e8ee; border-radius: 14px; padding: 13px 15px;
+  display: flex; gap: 12px; align-items: center;
+}
+.ex-vendor .avatar {
+  width: 42px; height: 42px; border-radius: 50%; color: #fff; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; font-size: 15px; flex: none;
+}
+.ex-vendor b { display: block; font-size: 14.5px; }
+.ex-vendor span { font-size: 12.5px; color: #5d6b7a; }
+
+.ex-reviewers { display: flex; flex-wrap: wrap; gap: 10px; }
+.ex-reviewer {
+  display: inline-flex; align-items: center; gap: 9px; background: #fff;
+  border: 1px solid #e3e8ee; border-radius: 999px; padding: 6px 14px 6px 7px; font-size: 13.5px;
+}
+.ex-reviewer .avatar { width: 30px; height: 30px; border-radius: 50%; color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.ex-reviewer small { color: #5d6b7a; display: block; font-size: 11.5px; }
+
+.ex-comments { list-style: none; margin: 0; padding: 0; }
+.ex-comments li { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #e3e8ee; }
+.ex-comments .avatar { width: 38px; height: 38px; border-radius: 50%; color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; flex: none; font-size: 14px; }
+.ex-comments .who { font-weight: 750; font-size: 13.5px; }
+.ex-comments .why { font-size: 11.5px; color: #14532d; background: #e7f4ed; border-radius: 6px; padding: 1px 7px; margin-left: 6px; }
+.ex-comments p { margin: 3px 0 0; font-size: 14px; }
+
+.ex-note { font-size: 12.5px; color: #5d6b7a; margin-top: 10px; }
+
+.ex-about-box { max-width: 760px; }
+.ex-about-box h2 { color: #14532d; font-size: 19px; margin: 24px 0 8px; }
+.ex-about-box ul { padding-left: 22px; }
+
+@media (max-width: 640px) {
+  .explore { padding: 16px 14px 32px; }
+  .ex-socialrow .locs { margin-left: 0; }
+}

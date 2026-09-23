@@ -9,8 +9,11 @@
     "build": "astro build",
     "check": "astro check"
   },
-  "engines": { "node": ">=20.18.0" },
+  "engines": {
+    "node": ">=20.18.0"
+  },
   "devDependencies": {
+    "@types/node": "^26.6.2",
     "astro": "^5.13.5",
     "typescript": "^5.7.3"
   },

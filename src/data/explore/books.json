@@ -1,0 +1,138 @@
+[
+ {
+  "slug": "tao-of-nutrition",
+  "title": "Tao of Nutrition",
+  "author": "Mao Shing Ni and Cathy McNease",
+  "year": "2012",
+  "count": 60,
+  "images": 0,
+  "full": true
+ },
+ {
+  "slug": "the-five-elements-cookbook",
+  "title": "The Five Elements Cookbook",
+  "author": "Zoey Xinyi Gong",
+  "year": "2021",
+  "count": 55,
+  "images": 56,
+  "full": true
+ },
+ {
+  "slug": "the-food-lab",
+  "title": "The Food Lab",
+  "author": "J. Kenji Lopez-Alt",
+  "year": "2015",
+  "count": 302,
+  "images": 169,
+  "full": true
+ },
+ {
+  "slug": "the-wisdom-of-the-chinese-kitchen",
+  "title": "The Wisdom of the Chinese Kitchen",
+  "author": "Grace Young with Alan Richardson",
+  "year": "1999",
+  "count": 150,
+  "images": 0,
+  "full": true
+ },
+ {
+  "slug": "vegetable-kingdom",
+  "title": "Vegetable Kingdom",
+  "author": "Bryant Terry",
+  "year": "2020",
+  "count": 143,
+  "images": 55,
+  "full": true
+ },
+ {
+  "slug": "the-how-not-to-age-cookbook",
+  "title": "The How Not to Age Cookbook",
+  "author": "Michael Greger",
+  "year": "2023",
+  "count": 106,
+  "images": 51,
+  "full": true
+ },
+ {
+  "slug": "the-blue-zones-kitchen-one-pot-meals",
+  "title": "The Blue Zones Kitchen One Pot Meals",
+  "author": "Dan Buettner",
+  "year": "2024",
+  "count": 114,
+  "images": 0,
+  "full": true
+ },
+ {
+  "slug": "a-plant-based-revolution-cookbook",
+  "title": "A Plant-Based Revolution Cookbook",
+  "author": "Michele Wallace",
+  "year": "",
+  "count": 87,
+  "full": false
+ },
+ {
+  "slug": "a-spoonful-of-ginger",
+  "title": "A Spoonful of Ginger",
+  "author": "Nina Simonds",
+  "year": "1999",
+  "count": 165,
+  "full": false
+ },
+ {
+  "slug": "forks-over-knives-the-cookbook",
+  "title": "Forks Over Knives — The Cookbook",
+  "author": "Del Sroufe and others",
+  "year": "2012",
+  "count": 320,
+  "full": false
+ },
+ {
+  "slug": "mediterranean-diet-cookbook-for-beginners",
+  "title": "Mediterranean Diet Cookbook for Beginners",
+  "author": "Enzo Reds",
+  "year": "2021",
+  "count": 1015,
+  "full": false
+ },
+ {
+  "slug": "plenty-more",
+  "title": "Plenty More",
+  "author": "Yotam Ottolenghi",
+  "year": "2014",
+  "count": 156,
+  "full": false
+ },
+ {
+  "slug": "salt-fat-acid-heat",
+  "title": "Salt Fat Acid Heat",
+  "author": "Samin Nosrat",
+  "year": "2017",
+  "count": 104,
+  "full": false
+ },
+ {
+  "slug": "the-how-not-to-die-cookbook",
+  "title": "The How Not to Die Cookbook",
+  "author": "Michael Greger",
+  "year": "2017",
+  "count": 106,
+  "full": false
+ },
+ {
+  "slug": "the-how-not-to-diet-cookbook",
+  "title": "The How Not to Diet Cookbook",
+  "author": "Michael Greger",
+  "year": "2019",
+  "count": 112,
+  "full": false
+ },
+ {
+  "slug": "china-the-cookbook",
+  "title": "China The Cookbook",
+  "author": "Kei Lum Chan and Diora Fong Chan",
+  "year": "2016",
+  "count": 269,
+  "full": false,
+  "partial": true
+ }
+]

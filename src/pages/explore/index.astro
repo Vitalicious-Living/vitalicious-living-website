@@ -1,0 +1,245 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/explore.css';
+
+interface ExploreRecipe {
+  id: string;
+  title: string;
+  book: string;
+  b: string;
+  family: string;
+  author: string;
+  year: string;
+  desc: string;
+  body?: string;
+  imgs?: string[];
+  io?: boolean;
+}
+
+interface ExploreBook {
+  slug: string;
+  title: string;
+  author: string;
+  year: string;
+  count: number;
+  images?: number;
+  full: boolean;
+  partial?: boolean;
+}
+
+const data: ExploreRecipe[] = JSON.parse(
+  fs.readFileSync(path.resolve(process.cwd(), 'src/data/explore/recipes.json'), 'utf-8')
+);
+const books: ExploreBook[] = JSON.parse(
+  fs.readFileSync(path.resolve(process.cwd(), 'src/data/explore/books.json'), 'utf-8')
+);
+const fullCount = data.filter((r) => !r.io).length;
+const ioCount = data.length - fullCount;
+const imgCount = data.reduce((n, r) => n + (r.imgs ? r.imgs.length : 0), 0);
+---
+
+<BaseLayout title="Explore Food (demo) | Vitalicious Living"
+  description="A demo directory of the recipe vault, each item cited to its cookbook source.">
+  <div class="ex-demo-banner" role="note">
+    <strong>DEMO BUILD.</strong>
+    Sample vendors, reviewers, comments and numbers are illustrative placeholders, not real
+    businesses, people, endorsements or availability.
+  </div>
+
+  <header class="site-header container">
+    <a class="wordmark" href="/" aria-label="Vitalicious Living home">
+      <img class="logo-mark" src="/brand/logo-mark.png" alt="" width="64" height="52" />
+      <span>VITALICIOUS</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="/explore/" aria-current="page">Explore Food</a>
+      <a href="/#move">Vitaspeed</a>
+      <a href="/#partners">For partners</a>
+      <a href="/#about">About</a>
+    </nav>
+  </header>
+
+  <main class="explore">
+    <h1 class="page">Explore Food</h1>
+    <p class="sub">
+      A directory of the vault's recipes, each cited to its cookbook source. Sample availability,
+      reviews and comments are illustrative.
+    </p>
+
+    <div class="ex-hero">
+      <div class="ex-stat"><b>{fullCount}</b><span>full recipes from recent books</span></div>
+      <div class="ex-stat"><b>{books.filter((b) => b.full).length}</b><span>recently processed books</span></div>
+      <div class="ex-stat"><b>{data.length.toLocaleString('en-CA')}</b><span>titles indexed vault-wide</span></div>
+      <div class="ex-stat"><b>{imgCount}</b><span>source photographs mapped</span></div>
+    </div>
+
+    <div class="ex-controls">
+      <input id="ex-q" type="search" placeholder="Search titles, books, families..." aria-label="Search recipes" />
+      <select id="ex-sort" aria-label="Sort">
+        <option value="added">Vault order</option>
+        <option value="az">Title A to Z</option>
+        <option value="liked">Most liked (sample)</option>
+      </select>
+      <label class="ex-toggle" for="ex-nophoto">
+        <input type="checkbox" id="ex-nophoto" />
+        Show recipes without photos
+      </label>
+    </div>
+    <div class="ex-chips" id="ex-chips"></div>
+    <div class="ex-grid" id="ex-grid" aria-live="polite"></div>
+    <button class="ex-loadmore" id="ex-more">Show more</button>
+
+    <section class="ex-block ex-about-box">
+      <h2>About this demo</h2>
+      <p class="sub">
+        Recipe titles, text, photographs and citations come from the private cookbook vault.
+        Markham vendors, professional reviewers, comments, likes, saves and location counts are
+        deterministic placeholders, labelled SAMPLE wherever they appear. Before a public Explore
+        Food, sample content must be replaced with Vitalicious originals or licensed recipes,
+        written partner agreements, named credentialed reviewers, and authenticated community
+        features.
+      </p>
+      <p class="ex-note">
+        Regenerate the dataset with <code>scripts/extract_explore_data.py</code>.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="wordmark" href="/">
+          <img class="logo-mark" src="/brand/logo-mark.png" alt="" width="64" height="52" />
+          <span>VITALICIOUS</span>
+        </a>
+        <p>Good food, supported by movement, rest, connection and community.</p>
+      </div>
+      <div>
+        <p class="footer-label">Explore</p>
+        <a href="/explore/">Food</a>
+        <a href="/#move">Vitaspeed</a>
+        <a href="/#partners">For partners</a>
+      </div>
+      <div>
+        <p class="footer-label">Status</p>
+        <p>Pre-launch<br />Markham, Ontario</p>
+      </div>
+    </div>
+  </footer>
+</BaseLayout>
+
+<script>
+  // @ts-nocheck
+  // Plain browser script for the demo directory; DOM lookups are guarded by page structure.
+  import { sampleData, esc, initials, hash32, AVATAR_COLORS } from '../../lib/explore.js';
+
+  let RECIPES = [];
+  let BOOKS = [];
+  const state = { q: '', book: 'all', sort: 'added', page: 1, showNoPhoto: false };
+
+  function card(r) {
+    const s = sampleData(r);
+    const hero = r.imgs && r.imgs.length ? r.imgs[0] : null;
+    const initial = (r.family || r.book)[0].toUpperCase();
+    const circles = s.vendors.slice(0, 3).map((v) =>
+      `<span class="c" style="background:${AVATAR_COLORS[hash32(v.name) % AVATAR_COLORS.length]}" title="${esc(v.name)} (sample)">${initials(v.name)}</span>`
+    ).join('');
+    const href = r.io ? null : `/explore/${r.id}/`;
+    const titleHtml = href
+      ? `<h3><a href="${href}">${esc(r.title)}</a></h3>`
+      : `<h3>${esc(r.title)} <span class="ex-chip grey">index</span></h3>`;
+    return `
+    <article class="ex-card">
+      ${href ? `<a class="thumb" href="${href}" aria-label="${esc(r.title)}">` : '<div class="thumb">'}
+        ${hero ? `<img loading="lazy" src="${esc(hero)}" alt="${esc(r.title)}" />` : `<span class="noimg">${initial}</span>`}
+        <span class="fam">${esc(r.family || '')}</span>
+      ${href ? '</a>' : '</div>'}
+      <div class="body">
+        ${titleHtml}
+        <div class="cite">${esc(r.book)}${r.author ? ' &middot; ' + esc(r.author) : ''}</div>
+        <div class="meta">
+          ${s.vendors.length
+            ? `<span class="ex-circles">${circles}</span><span>${s.vendors.length} location${s.vendors.length > 1 ? 's' : ''} <span class="ex-sample-tag">SAMPLE</span></span>`
+            : '<span>seeking a Markham partner</span>'}
+          <span class="ex-like"><span class="heart">&#9829;</span>${s.likes} <span class="ex-sample-tag">SAMPLE</span></span>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function filtered() {
+    const q = state.q.trim().toLowerCase();
+    let list;
+    if (state.book === 'vault') list = RECIPES.filter((r) => r.io);
+    else if (state.book === 'all') list = RECIPES.filter((r) => !r.io);
+    else list = RECIPES.filter((r) => r.b === state.book);
+    if (state.book !== 'vault' && !state.showNoPhoto) {
+      list = list.filter((r) => r.imgs && r.imgs.length > 0);
+    }
+    if (q) {
+      list = list.filter((r) =>
+        r.title.toLowerCase().includes(q) ||
+        r.book.toLowerCase().includes(q) ||
+        (r.family || '').toLowerCase().includes(q));
+    }
+    if (state.sort === 'az') list = [...list].sort((a, b) => a.title.localeCompare(b.title));
+    if (state.sort === 'liked') list = [...list].sort((a, b) => sampleData(b).likes - sampleData(a).likes);
+    return list;
+  }
+
+  function render() {
+    const grid = document.getElementById('ex-grid');
+    const more = document.getElementById('ex-more');
+    const list = filtered();
+    const slice = list.slice(0, state.page * 24);
+    grid.innerHTML = slice.map(card).join('') || '<p class="sub">No matches. Try another search.</p>';
+    more.style.display = slice.length < list.length ? 'block' : 'none';
+    more.textContent = `Show more (${list.length - slice.length} remaining)`;
+  }
+
+  function renderChips() {
+    const chips = document.getElementById('ex-chips');
+    const ioCount = RECIPES.filter((r) => r.io).length;
+    const parts = [`<button data-book="all" class="${state.book === 'all' ? 'on' : ''}">All recent books</button>`];
+    for (const b of BOOKS.filter((b) => b.full)) {
+      parts.push(`<button data-book="${b.slug}" class="${state.book === b.slug ? 'on' : ''}">${esc(b.title)} (${b.count})</button>`);
+    }
+    parts.push(`<button data-book="vault" class="${state.book === 'vault' ? 'on' : ''}">Whole vault index (${ioCount})</button>`);
+    chips.innerHTML = parts.join('');
+  }
+
+  const boot = async () => {
+    const [r, b] = await Promise.all([
+      fetch('/explore-data/recipes.json').then((x) => x.json()),
+      fetch('/explore-data/books.json').then((x) => x.json()),
+    ]);
+    RECIPES = r;
+    BOOKS = b;
+    renderChips();
+    render();
+
+    const q = document.getElementById('ex-q');
+    const sort = document.getElementById('ex-sort');
+    const nophoto = document.getElementById('ex-nophoto');
+    let deb;
+    q.addEventListener('input', () => {
+      clearTimeout(deb);
+      deb = setTimeout(() => { state.q = q.value; state.page = 1; render(); }, 140);
+    });
+    sort.addEventListener('change', () => { state.sort = sort.value; state.page = 1; render(); });
+    nophoto.addEventListener('change', () => { state.showNoPhoto = nophoto.checked; state.page = 1; render(); });
+    document.getElementById('ex-chips').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-book]');
+      if (!btn) return;
+      state.book = btn.dataset.book;
+      state.page = 1;
+      renderChips();
+      render();
+    });
+    document.getElementById('ex-more').addEventListener('click', () => { state.page += 1; render(); });
+  };
+
+  boot();
+</script>

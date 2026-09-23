@@ -1,0 +1,216 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/explore.css';
+import { sampleData, renderBody, esc, initials, hash32, AVATAR_COLORS, BOOK_NOTES } from '../../lib/explore.js';
+
+export interface ExploreRecipe {
+  id: string;
+  title: string;
+  book: string;
+  b: string;
+  family: string;
+  author: string;
+  year: string;
+  desc: string;
+  body: string;
+  imgs?: string[];
+  io?: boolean;
+}
+
+export function getStaticPaths() {
+  const all: ExploreRecipe[] = JSON.parse(
+    fs.readFileSync(path.resolve(process.cwd(), 'src/data/explore/recipes.json'), 'utf-8')
+  );
+  return all
+    .filter((r) => !r.io)
+    .map((r) => ({ params: { id: r.id }, props: { r } }));
+}
+
+const { r } = Astro.props as { r: ExploreRecipe };
+const s = sampleData(r);
+const hero = r.imgs && r.imgs.length ? r.imgs[0] : null;
+const bookNote = BOOK_NOTES[r.b] || '';
+const title = `${r.title} (demo) | Vitalicious Living`;
+---
+
+<BaseLayout title={title}
+  description={`${r.title}, cited to ${r.book}${r.author ? ' by ' + r.author : ''}. Demo listing with sample availability and reviews.`}>
+  <div class="ex-demo-banner" role="note">
+    <strong>DEMO BUILD.</strong>
+    Sample vendors, reviewers, comments and numbers are illustrative placeholders, not real
+    businesses, people, endorsements or availability.
+  </div>
+
+  <header class="site-header container">
+    <a class="wordmark" href="/" aria-label="Vitalicious Living home">
+      <img class="logo-mark" src="/brand/logo-mark.png" alt="" width="64" height="52" />
+      <span>VITALICIOUS</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="/explore/" aria-current="page">Explore Food</a>
+      <a href="/#move">Vitaspeed</a>
+      <a href="/#partners">For partners</a>
+      <a href="/#about">About</a>
+    </nav>
+  </header>
+
+  <main class="explore">
+    <div class="ex-post">
+      <a class="ex-back" href="/explore/">&larr; Explore Food</a>
+      {hero && (
+        <div class="ex-heroimg">
+          <img src={hero} alt={r.title} />
+        </div>
+      )}
+      {r.imgs && r.imgs.length > 1 && (
+        <div class="ex-thumbs">
+          {r.imgs.map((i) => <img loading="lazy" src={i} alt="" />)}
+        </div>
+      )}
+
+      <h1>{r.title}</h1>
+      <div class="ex-citation">
+        <b>Cookbook reference:</b> {r.book}{r.author ? `, ${r.author}` : ''}{r.year ? ` (${r.year})` : ''}
+        &middot; recipe family: {r.family || ''}
+      </div>
+
+      <div class="ex-socialrow">
+        <span class="act on">&#9829; {s.likes} <span class="ex-sample-tag">SAMPLE</span></span>
+        <span class="act">&#9634; Save &middot; {s.saves} <span class="ex-sample-tag">SAMPLE</span></span>
+        <span class="act">&#128172; {s.comments.length} comments</span>
+        <span class="locs">
+          {s.vendors.length ? (
+            <span class="ex-circles lg">
+              {s.vendors.slice(0, 4).map((v) => (
+                <span class="c" style={`background:${AVATAR_COLORS[hash32(v.name) % AVATAR_COLORS.length]}`} title={`${v.name} (sample)`}>
+                  {initials(v.name)}
+                </span>
+              ))}
+            </span>
+          ) : null}
+          {s.vendors.length
+            ? `${s.vendors.length} Markham location${s.vendors.length > 1 ? 's' : ''} (sample)`
+            : 'seeking a Markham partner'}
+        </span>
+      </div>
+
+      {r.desc && (
+        <section class="ex-block">
+          <h2>What it is</h2>
+          <p>{r.desc}</p>
+        </section>
+      )}
+
+      <section class="ex-block">
+        <h2>The full recipe (private reference)</h2>
+        <div class="ex-recipe-text" set:html={renderBody(r.body)} />
+        <p class="ex-note">
+          Recipe text and photograph are cited to {r.book} and retained in the private vault.
+          They appear in this demo for evaluation only.
+        </p>
+      </section>
+
+      <section class="ex-block">
+        <h2>Where it is from and where the inspirations are</h2>
+        <p>
+          {bookNote} This dish is catalogued under <b>{r.family || ''}</b> in the vault's source
+          graph, with provenance back to the processed book package.
+        </p>
+      </section>
+
+      <section class="ex-block">
+        <h2>Find it in Markham</h2>
+        {s.vendors.length ? (
+          <div class="ex-vendorrow">
+            {s.vendors.map((v) => (
+              <div class="ex-vendor">
+                <span class="avatar" style={`background:${AVATAR_COLORS[hash32(v.name) % AVATAR_COLORS.length]}`}>
+                  {initials(v.name)}
+                </span>
+                <div>
+                  <b>{v.name}</b>
+                  <span>{v.type} &middot; Markham &middot; sample</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p class="sub">
+            No sample vendor assigned. In production this dish would show
+            <em>seeking a Markham restaurant partner</em> until a real partner confirms availability.
+          </p>
+        )}
+        <p class="ex-note">
+          Vendors above are fictional examples. Real listings require written partner approval and
+          current availability confirmation.
+        </p>
+      </section>
+
+      <section class="ex-block">
+        <h2>Professional notes</h2>
+        {s.reviewers.length ? (
+          <div class="ex-reviewers">
+            {s.reviewers.map((v) => (
+              <span class="ex-reviewer">
+                <span class="avatar" style={`background:${v.color}`}>{initials(v.name)}</span>
+                <span>
+                  <b>{v.name}</b>
+                  <small>{v.cred} &middot; {v.scope} &middot; sample</small>
+                </span>
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p class="sub">No sample reviewer assigned. In production this dish would show <em>review not yet assigned</em>.</p>
+        )}
+        <p class="ex-note">
+          Reviewers above are sample personas. Real endorsement requires a named, credentialed
+          reviewer with a recorded scope and date under the recipe governance protocol.
+        </p>
+      </section>
+
+      <section class="ex-block">
+        <h2>Community</h2>
+        <ul class="ex-comments">
+          {s.comments.map((c) => (
+            <li>
+              <span class="avatar" style={`background:${c.color}`}>{initials(c.handle)}</span>
+              <div>
+                <div class="who">{c.handle} <span class="why">{c.why}</span></div>
+                <p>{c.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <p class="ex-note">
+          Sample comments for demonstration. A production build shows only authenticated,
+          moderated discussion.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="wordmark" href="/">
+          <img class="logo-mark" src="/brand/logo-mark.png" alt="" width="64" height="52" />
+          <span>VITALICIOUS</span>
+        </a>
+        <p>Good food, supported by movement, rest, connection and community.</p>
+      </div>
+      <div>
+        <p class="footer-label">Explore</p>
+        <a href="/explore/">Food</a>
+        <a href="/#move">Vitaspeed</a>
+        <a href="/#partners">For partners</a>
+      </div>
+      <div>
+        <p class="footer-label">Status</p>
+        <p>Pre-launch<br />Markham, Ontario</p>
+      </div>
+    </div>
+  </footer>
+</BaseLayout>
